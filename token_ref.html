@@ -1,0 +1,2141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="awa-expId" content="vscw_aaflight1016_control:103441;" />
+    <meta name="awa-env" content="prod" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-site-verification"
+      content="hNs7DXrTySP_X-0P_AC0WulAXvUwgSXEmgfcO2r79dw"
+    />
+
+    <!-- Twitter and Facebook OpenGraph Metadata-->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@code" />
+
+    <meta name="keywords" content="vscode API" />
+
+    <meta name="description" content="A guide to syntax highlighting" />
+
+    <meta name="ms.prod" content="vs-code" />
+    <meta name="ms.TOCTitle" content="Semantic Highlight Guide" />
+    <meta name="ms.ContentId" content="8308017a-75de-430a-b420-d9d2064162b9" />
+    <meta name="ms.topic" content="conceptual" />
+    <meta name="ms.date" content="02/1/2024" />
+    <!-- Twitter and Facebook OpenGraph Metadata-->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      property="og:url"
+      content="https://code.visualstudio.com/api/language-extensions/semantic-highlight-guide"
+    />
+
+    <meta property="og:description" content="A guide to syntax highlighting" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Semantic Highlight Guide" />
+    <meta
+      property="og:image"
+      content="https://code.visualstudio.com/opengraphimg/opengraph-docs.png"
+    />
+
+    <link rel="shortcut icon" href="/favicon.ico" sizes="128x128" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <title>Semantic Highlight Guide | Visual Studio Code Extension API</title>
+
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/dist/style.css" />
+
+    <script
+      type="text/javascript"
+      src="https://js.monitor.azure.com/scripts/c/ms.analytics-web-3.min.js"
+    ></script>
+    <script>
+      window.appInsights = new oneDS.ApplicationInsights();
+      window.appInsights.initialize(
+        {
+          instrumentationKey:
+            "1a3eb3104447440391ad5f2a6ee06a0a-62879566-bc58-4741-9650-302bf2af703f-7103",
+          propertyConfiguration: {
+            gpcDataSharingOptIn: false,
+          },
+          webAnalyticsConfiguration: {
+            // Web Analytics Plugin configuration
+            urlCollectQuery: true,
+            urlCollectHash: true,
+            autoCapture: {
+              scroll: true,
+              pageView: true,
+              onLoad: true,
+              onUnload: true,
+              click: true,
+              resize: true,
+              jsError: true,
+            },
+          },
+        },
+        []
+      );
+
+      const GPC_DataSharingOptIn = false;
+      window.appInsights
+        .getPropertyManager()
+        .getPropertiesContext().web.gpcDataSharingOptIn = GPC_DataSharingOptIn;
+    </script>
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="RSS Feed for code.visualstudio.com"
+      href="/feed.xml"
+    />
+  </head>
+
+  <body>
+    <!-- EU Cookie Compliance JS -->
+    <script src="https://wcpstatic.microsoft.com/mscc/lib/v2/wcp-consent.js"></script>
+
+    <div id="main">
+      <div class="navbar-fixed-container">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+          <div id="cookie-banner"></div>
+          <nav role="navigation" aria-label="Top Level">
+            <div class="container">
+              <div class="nav navbar-header">
+                <a
+                  role="button"
+                  id="skip-to-content"
+                  class="link-button"
+                  href="#main-content"
+                  >Skip to content<i>&nbsp;</i
+                  ><span class="glyphicon glyphicon-menu-down"></span
+                ></a>
+                <a class="navbar-brand" id="navbar-brand" href="/"
+                  >Visual Studio Code</a
+                >
+                <button
+                  type="button"
+                  class="navbar-toggle"
+                  data-toggle="collapse"
+                  data-target=".navbar-collapse"
+                  aria-label="Toggle Navigation Menu"
+                >
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="navbar-collapse collapse" role="navigation">
+                <ul class="nav navbar-nav navbar-left">
+                  <li><a id="nav-docs" href="/docs">Docs</a></li>
+                  <li><a id="nav-updates" href="/updates">Updates</a></li>
+                  <li><a id="nav-blogs" href="/blogs">Blog</a></li>
+                  <li class="active"><a id="nav-extend" href="/api">API</a></li>
+                  <li>
+                    <a
+                      href="https://marketplace.visualstudio.com/VSCode"
+                      target="_blank"
+                      id="nav-extensions"
+                      >Extensions</a
+                    >
+                  </li>
+                  <li><a id="nav-faqs" href="/docs/supporting/faq">FAQ</a></li>
+                  <li><a id="nav-learn" href="/learn">Learn</a></li>
+                  <li class="search visible-xs visible-sm">
+                    <a href="/Search">Search</a>
+                  </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right" role="presentation">
+                  <!-- Floating search icon -->
+                  <li>
+                    <a
+                      href="/Search"
+                      title="Search"
+                      class="btn search-btn"
+                      id="nav-search"
+                    >
+                      <img
+                        class="search-icon"
+                        src="/assets/icons/search.svg"
+                        width="16px"
+                        height="16px"
+                        alt="Search"
+                      />
+                      <img
+                        class="search-icon-inverted"
+                        src="/assets/icons/search_dark.svg"
+                        width="16px"
+                        height="16px"
+                        alt="Search"
+                      />
+                    </a>
+                  </li>
+                  <!-- Actual search icon -->
+                  <li class="search" role="presentation">
+                    <form
+                      class="nav-search search-form"
+                      role="search"
+                      aria-label="Search"
+                    >
+                      <div class="input-group" role="presentation">
+                        <input
+                          type="text"
+                          name="q"
+                          class="search-box form-control"
+                          placeholder="Search Docs"
+                          aria-label="Search text"
+                        />
+                        <span class="input-group-btn">
+                          <button
+                            tabindex="0"
+                            class="btn"
+                            type="submit"
+                            aria-label="Search"
+                          >
+                            <img
+                              class="search-icon"
+                              src="/assets/icons/search.svg"
+                              width="16px"
+                              height="16px"
+                              alt="Search"
+                            />
+                            <img
+                              class="search-icon-inverted"
+                              src="/assets/icons/search_dark.svg"
+                              width="16px"
+                              height="16px"
+                              alt="Search"
+                            />
+                          </button>
+                        </span>
+                      </div>
+                    </form>
+                  </li>
+                  <!-- this was hiden in the home and download page, keeping it for now -->
+                  <li>
+                    <a class="link-button" href="/Download" id="nav-download">
+                      <img
+                        class="download-icon"
+                        src="/assets/icons/download.svg"
+                        width="16px"
+                        height="16px"
+                        alt="Download VS Code"
+                      />
+                      <img
+                        class="download-icon-inverted"
+                        src="/assets/icons/download-black.svg"
+                        width="16px"
+                        height="16px"
+                        alt="Download VS Code"
+                      />
+                      <span>Download</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="updates-banner">
+        <div class="container">
+          <p class="message">
+            <a href="/updates" id="banner-link-updates">Version 1.86</a> is now
+            available! Read about the new features and fixes from January.
+          </p>
+        </div>
+        <div
+          tabindex="0"
+          role="button"
+          title="Dismiss this update"
+          class="dismiss-btn"
+          id="banner-dismiss-btn"
+        >
+          <span class="sr-only">Dismiss this update</span
+          ><span aria-hidden="true" class="glyph-icon"></span>
+        </div>
+      </div>
+      <div role="main" id="main-content">
+        <div class="container body-content docs">
+          <div class="row">
+            <!-- left nav -->
+            <div class="col-xs-12 col-md-2 docs-navbar-container">
+              <nav
+                id="docs-navbar"
+                aria-label="Topics"
+                class="docs-nav visible-md visible-lg"
+              >
+                <ul class="nav" id="main-nav">
+                  <li>
+                    <a class="docs-home" href="/api">Overview</a>
+                  </li>
+
+                  <li class="panel collapsed">
+                    <a
+                      class="area"
+                      role="button"
+                      href="#get-started-articles"
+                      data-parent="#main-nav"
+                      data-toggle="collapse"
+                      >Get Started</a
+                    >
+                    <ul id="get-started-articles" class="collapse">
+                      <li>
+                        <a href="/api/get-started/your-first-extension"
+                          >Your First Extension</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/get-started/extension-anatomy"
+                          >Extension Anatomy</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/get-started/wrapping-up">Wrapping Up</a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="panel collapsed">
+                    <a
+                      class="area"
+                      role="button"
+                      href="#extension-capabilities-articles"
+                      data-parent="#main-nav"
+                      data-toggle="collapse"
+                      >Extension Capabilities</a
+                    >
+                    <ul id="extension-capabilities-articles" class="collapse">
+                      <li>
+                        <a href="/api/extension-capabilities/overview"
+                          >Overview</a
+                        >
+                      </li>
+
+                      <li>
+                        <a
+                          href="/api/extension-capabilities/common-capabilities"
+                          >Common Capabilities</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-capabilities/theming"
+                          >Theming</a
+                        >
+                      </li>
+
+                      <li>
+                        <a
+                          href="/api/extension-capabilities/extending-workbench"
+                          >Extending Workbench</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="panel collapsed">
+                    <a
+                      class="area"
+                      role="button"
+                      href="#extension-guides-articles"
+                      data-parent="#main-nav"
+                      data-toggle="collapse"
+                      >Extension Guides</a
+                    >
+                    <ul id="extension-guides-articles" class="collapse">
+                      <li>
+                        <a href="/api/extension-guides/overview">Overview</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/command">Command</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/color-theme"
+                          >Color Theme</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/file-icon-theme"
+                          >File Icon Theme</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/product-icon-theme"
+                          >Product Icon Theme</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/tree-view">Tree View</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/webview">Webview</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/notebook">Notebook</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/custom-editors"
+                          >Custom Editors</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/virtual-documents"
+                          >Virtual Documents</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/virtual-workspaces"
+                          >Virtual Workspaces</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/web-extensions"
+                          >Web Extensions</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/workspace-trust"
+                          >Workspace Trust</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/task-provider"
+                          >Task Provider</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/scm-provider"
+                          >Source Control</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/debugger-extension"
+                          >Debugger Extension</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/markdown-extension"
+                          >Markdown Extension</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/testing"
+                          >Test Extension</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/custom-data-extension"
+                          >Custom Data Extension</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/extension-guides/telemetry">Telemetry</a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="panel collapsed">
+                    <a
+                      class="area"
+                      role="button"
+                      href="#ux-guidelines-articles"
+                      data-parent="#main-nav"
+                      data-toggle="collapse"
+                      >UX Guidelines</a
+                    >
+                    <ul id="ux-guidelines-articles" class="collapse">
+                      <li>
+                        <a href="/api/ux-guidelines/overview">Overview</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/activity-bar"
+                          >Activity Bar</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/sidebars">Sidebars</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/panel">Panel</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/status-bar">Status Bar</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/views">Views</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/editor-actions"
+                          >Editor Actions</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/quick-picks">Quick Picks</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/command-palette"
+                          >Command Palette</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/notifications"
+                          >Notifications</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/webviews">Webviews</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/context-menus"
+                          >Context Menus</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/walkthroughs"
+                          >Walkthroughs</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/ux-guidelines/settings">Settings</a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="panel active expanded">
+                    <a
+                      class="area"
+                      role="button"
+                      href="#language-extensions-articles"
+                      data-parent="#main-nav"
+                      data-toggle="collapse"
+                      >Language Extensions</a
+                    >
+                    <ul id="language-extensions-articles" class="collapse in">
+                      <li>
+                        <a href="/api/language-extensions/overview">Overview</a>
+                      </li>
+
+                      <li>
+                        <a
+                          href="/api/language-extensions/syntax-highlight-guide"
+                          >Syntax Highlight Guide</a
+                        >
+                      </li>
+
+                      <li class="active">
+                        <a
+                          href="/api/language-extensions/semantic-highlight-guide"
+                          aria-label="Current Page: Semantic Highlight Guide"
+                          >Semantic Highlight Guide</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/language-extensions/snippet-guide"
+                          >Snippet Guide</a
+                        >
+                      </li>
+
+                      <li>
+                        <a
+                          href="/api/language-extensions/language-configuration-guide"
+                          >Language Configuration Guide</a
+                        >
+                      </li>
+
+                      <li>
+                        <a
+                          href="/api/language-extensions/programmatic-language-features"
+                          >Programmatic Language Features</a
+                        >
+                      </li>
+
+                      <li>
+                        <a
+                          href="/api/language-extensions/language-server-extension-guide"
+                          >Language Server Extension Guide</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/language-extensions/embedded-languages"
+                          >Embedded Languages</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="panel collapsed">
+                    <a
+                      class="area"
+                      role="button"
+                      href="#working-with-extensions-articles"
+                      data-parent="#main-nav"
+                      data-toggle="collapse"
+                      >Testing and Publishing</a
+                    >
+                    <ul id="working-with-extensions-articles" class="collapse">
+                      <li>
+                        <a href="/api/working-with-extensions/testing-extension"
+                          >Testing Extensions</a
+                        >
+                      </li>
+
+                      <li>
+                        <a
+                          href="/api/working-with-extensions/publishing-extension"
+                          >Publishing Extensions</a
+                        >
+                      </li>
+
+                      <li>
+                        <a
+                          href="/api/working-with-extensions/bundling-extension"
+                          >Bundling Extensions</a
+                        >
+                      </li>
+
+                      <li>
+                        <a
+                          href="/api/working-with-extensions/continuous-integration"
+                          >Continuous Integration</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="panel collapsed">
+                    <a
+                      class="area"
+                      role="button"
+                      href="#advanced-topics-articles"
+                      data-parent="#main-nav"
+                      data-toggle="collapse"
+                      >Advanced Topics</a
+                    >
+                    <ul id="advanced-topics-articles" class="collapse">
+                      <li>
+                        <a href="/api/advanced-topics/extension-host"
+                          >Extension Host</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/advanced-topics/remote-extensions"
+                          >Remote Development and Codespaces</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/advanced-topics/using-proposed-api"
+                          >Using Proposed API</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/advanced-topics/tslint-eslint-migration"
+                          >Migrate from TSLint to ESLint</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/advanced-topics/python-extension-template"
+                          >Python Extension Template</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="panel collapsed">
+                    <a
+                      class="area"
+                      role="button"
+                      href="#references-articles"
+                      data-parent="#main-nav"
+                      data-toggle="collapse"
+                      >References</a
+                    >
+                    <ul id="references-articles" class="collapse">
+                      <li>
+                        <a href="/api/references/vscode-api">VS Code API </a>
+                      </li>
+
+                      <li>
+                        <a href="/api/references/contribution-points"
+                          >Contribution Points</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/references/activation-events"
+                          >Activation Events</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/references/extension-manifest"
+                          >Extension Manifest</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/references/commands">Built-in Commands</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/references/when-clause-contexts"
+                          >When clause contexts</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/references/theme-color">Theme Color</a>
+                      </li>
+
+                      <li>
+                        <a href="/api/references/icons-in-labels"
+                          >Product Icon Reference</a
+                        >
+                      </li>
+
+                      <li>
+                        <a href="/api/references/document-selector"
+                          >Document Selector</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+
+              <nav
+                id="small-nav"
+                aria-label="Topics"
+                class="docs-nav hidden-md hidden-lg"
+              >
+                <label class="faux-h4" for="small-nav-dropdown">Topics</label>
+                <select id="small-nav-dropdown" aria-label="topics">
+                  <option value="/api">Overview</option>
+
+                  <optgroup label="Get Started">
+                    <option value="/api/get-started/your-first-extension">
+                      Your First Extension
+                    </option>
+
+                    <option value="/api/get-started/extension-anatomy">
+                      Extension Anatomy
+                    </option>
+
+                    <option value="/api/get-started/wrapping-up">
+                      Wrapping Up
+                    </option>
+                  </optgroup>
+
+                  <optgroup label="Extension Capabilities">
+                    <option value="/api/extension-capabilities/overview">
+                      Overview
+                    </option>
+
+                    <option
+                      value="/api/extension-capabilities/common-capabilities"
+                    >
+                      Common Capabilities
+                    </option>
+
+                    <option value="/api/extension-capabilities/theming">
+                      Theming
+                    </option>
+
+                    <option
+                      value="/api/extension-capabilities/extending-workbench"
+                    >
+                      Extending Workbench
+                    </option>
+                  </optgroup>
+
+                  <optgroup label="Extension Guides">
+                    <option value="/api/extension-guides/overview">
+                      Overview
+                    </option>
+
+                    <option value="/api/extension-guides/command">
+                      Command
+                    </option>
+
+                    <option value="/api/extension-guides/color-theme">
+                      Color Theme
+                    </option>
+
+                    <option value="/api/extension-guides/file-icon-theme">
+                      File Icon Theme
+                    </option>
+
+                    <option value="/api/extension-guides/product-icon-theme">
+                      Product Icon Theme
+                    </option>
+
+                    <option value="/api/extension-guides/tree-view">
+                      Tree View
+                    </option>
+
+                    <option value="/api/extension-guides/webview">
+                      Webview
+                    </option>
+
+                    <option value="/api/extension-guides/notebook">
+                      Notebook
+                    </option>
+
+                    <option value="/api/extension-guides/custom-editors">
+                      Custom Editors
+                    </option>
+
+                    <option value="/api/extension-guides/virtual-documents">
+                      Virtual Documents
+                    </option>
+
+                    <option value="/api/extension-guides/virtual-workspaces">
+                      Virtual Workspaces
+                    </option>
+
+                    <option value="/api/extension-guides/web-extensions">
+                      Web Extensions
+                    </option>
+
+                    <option value="/api/extension-guides/workspace-trust">
+                      Workspace Trust
+                    </option>
+
+                    <option value="/api/extension-guides/task-provider">
+                      Task Provider
+                    </option>
+
+                    <option value="/api/extension-guides/scm-provider">
+                      Source Control
+                    </option>
+
+                    <option value="/api/extension-guides/debugger-extension">
+                      Debugger Extension
+                    </option>
+
+                    <option value="/api/extension-guides/markdown-extension">
+                      Markdown Extension
+                    </option>
+
+                    <option value="/api/extension-guides/testing">
+                      Test Extension
+                    </option>
+
+                    <option value="/api/extension-guides/custom-data-extension">
+                      Custom Data Extension
+                    </option>
+
+                    <option value="/api/extension-guides/telemetry">
+                      Telemetry
+                    </option>
+                  </optgroup>
+
+                  <optgroup label="UX Guidelines">
+                    <option value="/api/ux-guidelines/overview">
+                      Overview
+                    </option>
+
+                    <option value="/api/ux-guidelines/activity-bar">
+                      Activity Bar
+                    </option>
+
+                    <option value="/api/ux-guidelines/sidebars">
+                      Sidebars
+                    </option>
+
+                    <option value="/api/ux-guidelines/panel">Panel</option>
+
+                    <option value="/api/ux-guidelines/status-bar">
+                      Status Bar
+                    </option>
+
+                    <option value="/api/ux-guidelines/views">Views</option>
+
+                    <option value="/api/ux-guidelines/editor-actions">
+                      Editor Actions
+                    </option>
+
+                    <option value="/api/ux-guidelines/quick-picks">
+                      Quick Picks
+                    </option>
+
+                    <option value="/api/ux-guidelines/command-palette">
+                      Command Palette
+                    </option>
+
+                    <option value="/api/ux-guidelines/notifications">
+                      Notifications
+                    </option>
+
+                    <option value="/api/ux-guidelines/webviews">
+                      Webviews
+                    </option>
+
+                    <option value="/api/ux-guidelines/context-menus">
+                      Context Menus
+                    </option>
+
+                    <option value="/api/ux-guidelines/walkthroughs">
+                      Walkthroughs
+                    </option>
+
+                    <option value="/api/ux-guidelines/settings">
+                      Settings
+                    </option>
+                  </optgroup>
+
+                  <optgroup label="Language Extensions">
+                    <option value="/api/language-extensions/overview">
+                      Overview
+                    </option>
+
+                    <option
+                      value="/api/language-extensions/syntax-highlight-guide"
+                    >
+                      Syntax Highlight Guide
+                    </option>
+
+                    <option
+                      value="/api/language-extensions/semantic-highlight-guide"
+                      selected
+                    >
+                      Semantic Highlight Guide
+                    </option>
+
+                    <option value="/api/language-extensions/snippet-guide">
+                      Snippet Guide
+                    </option>
+
+                    <option
+                      value="/api/language-extensions/language-configuration-guide"
+                    >
+                      Language Configuration Guide
+                    </option>
+
+                    <option
+                      value="/api/language-extensions/programmatic-language-features"
+                    >
+                      Programmatic Language Features
+                    </option>
+
+                    <option
+                      value="/api/language-extensions/language-server-extension-guide"
+                    >
+                      Language Server Extension Guide
+                    </option>
+
+                    <option value="/api/language-extensions/embedded-languages">
+                      Embedded Languages
+                    </option>
+                  </optgroup>
+
+                  <optgroup label="Testing and Publishing">
+                    <option
+                      value="/api/working-with-extensions/testing-extension"
+                    >
+                      Testing Extensions
+                    </option>
+
+                    <option
+                      value="/api/working-with-extensions/publishing-extension"
+                    >
+                      Publishing Extensions
+                    </option>
+
+                    <option
+                      value="/api/working-with-extensions/bundling-extension"
+                    >
+                      Bundling Extensions
+                    </option>
+
+                    <option
+                      value="/api/working-with-extensions/continuous-integration"
+                    >
+                      Continuous Integration
+                    </option>
+                  </optgroup>
+
+                  <optgroup label="Advanced Topics">
+                    <option value="/api/advanced-topics/extension-host">
+                      Extension Host
+                    </option>
+
+                    <option value="/api/advanced-topics/remote-extensions">
+                      Remote Development and Codespaces
+                    </option>
+
+                    <option value="/api/advanced-topics/using-proposed-api">
+                      Using Proposed API
+                    </option>
+
+                    <option
+                      value="/api/advanced-topics/tslint-eslint-migration"
+                    >
+                      Migrate from TSLint to ESLint
+                    </option>
+
+                    <option
+                      value="/api/advanced-topics/python-extension-template"
+                    >
+                      Python Extension Template
+                    </option>
+                  </optgroup>
+
+                  <optgroup label="References">
+                    <option value="/api/references/vscode-api">
+                      VS Code API
+                    </option>
+
+                    <option value="/api/references/contribution-points">
+                      Contribution Points
+                    </option>
+
+                    <option value="/api/references/activation-events">
+                      Activation Events
+                    </option>
+
+                    <option value="/api/references/extension-manifest">
+                      Extension Manifest
+                    </option>
+
+                    <option value="/api/references/commands">
+                      Built-in Commands
+                    </option>
+
+                    <option value="/api/references/when-clause-contexts">
+                      When clause contexts
+                    </option>
+
+                    <option value="/api/references/theme-color">
+                      Theme Color
+                    </option>
+
+                    <option value="/api/references/icons-in-labels">
+                      Product Icon Reference
+                    </option>
+
+                    <option value="/api/references/document-selector">
+                      Document Selector
+                    </option>
+                  </optgroup>
+                </select>
+              </nav>
+            </div>
+
+            <!-- small right nav -->
+
+            <div class="col-xs-12 visible-xs">
+              <nav
+                aria-labelledby="small-right-nav-label"
+                class="small-nav docs-nav updates-nav"
+              >
+                <label
+                  class="faux-h4"
+                  for="small-right-nav-dropdown"
+                  id="small-right-nav-label"
+                  >In this article</label
+                >
+                <select
+                  id="small-right-nav-dropdown"
+                  class="small-nav-select"
+                  aria-label="Sections"
+                >
+                  <option value="#semantic-token-provider">
+                    Semantic token provider
+                  </option>
+
+                  <option value="#semantic-token-classification">
+                    Semantic token classification
+                  </option>
+
+                  <option value="#enablement-of-semantic-highlighting">
+                    Enablement of semantic highlighting
+                  </option>
+
+                  <option value="#theming">Theming</option>
+
+                  <option value="#semantic-token-scope-map">
+                    Semantic token scope map
+                  </option>
+
+                  <option value="#try-it-out">Try it out</option>
+                </select>
+              </nav>
+            </div>
+
+            <!-- main content -->
+            <div class="col-xs-12 col-sm-9 col-md-8 body">
+              <div class="edit-github pull-right">
+                <a
+                  href="https://vscode.dev/github/microsoft/vscode-docs/blob/main/api/language-extensions/semantic-highlight-guide.md"
+                  class="btn btn-default"
+                  title="Edit this document in vscode.dev"
+                >
+                  <span class="glyphicon glyphicon-pencil"></span>
+                  <span class="hidden-xs">Edit</span>
+                </a>
+              </div>
+              <h1>Semantic Highlight Guide</h1>
+              <p>
+                Semantic highlighting is an addition to syntax highlighting as
+                described in the
+                <a href="/api/language-extensions/syntax-highlight-guide"
+                  >Syntax Highlight guide</a
+                >. Visual Studio Code uses TextMate grammars as the main
+                tokenization engine. TextMate grammars work on a single file as
+                input and break it up based on lexical rules expressed in
+                regular expressions.
+              </p>
+              <p>
+                Semantic tokenization allows language servers to provide
+                additional token information based on the language server's
+                knowledge on how to resolve symbols in the context of a project.
+                Themes can opt in to use semantic tokens to improve and refine
+                the syntax highlighting from grammars. The editor applies the
+                highlighting from semantic tokens on top of the highlighting
+                from grammars.
+              </p>
+              <p>Here's an example of what semantic highlighting can add:</p>
+              <p>Without semantic highlighting:</p>
+              <p>
+                <img
+                  src="/assets/api/language-extensions/semantic-highlighting/no-semantic-highlighting.png"
+                  alt="without semantic highlighting"
+                  loading="lazy"
+                />
+              </p>
+              <p>With semantic highlighting:</p>
+              <p>
+                <img
+                  src="/assets/api/language-extensions/semantic-highlighting/with-semantic-highlighting.png"
+                  alt="with semantic highlighting"
+                  loading="lazy"
+                />
+              </p>
+              <p>
+                Notice the color differences based on language service symbol
+                understanding:
+              </p>
+              <ul>
+                <li>
+                  line 10: <code>languageModes</code> is colored as a parameter
+                </li>
+                <li>
+                  line 11: <code>Range</code> and <code>Position</code> are
+                  colored as classes and <code>document</code> as a parameter.
+                </li>
+                <li>
+                  line 13: <code>getFoldingRanges</code> is colored as a
+                  function.
+                </li>
+              </ul>
+              <h2
+                id="semantic-token-provider"
+                data-needslink="semantic-token-provider"
+              >
+                Semantic token provider
+              </h2>
+              <p>
+                To implement semantic highlighting, language extensions can
+                register a <code>semantic token provider</code> by document
+                language and/or file name. The editor will make requests to the
+                providers when semantic tokens are needed.
+              </p>
+              <pre
+                class="shiki"
+                style="background-color: #ffffff"
+              ><code><span class="line"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">tokenTypes</span><span style="color: #000000"> = [</span><span style="color: #A31515">&#39;class&#39;</span><span style="color: #000000">, </span><span style="color: #A31515">&#39;interface&#39;</span><span style="color: #000000">, </span><span style="color: #A31515">&#39;enum&#39;</span><span style="color: #000000">, </span><span style="color: #A31515">&#39;function&#39;</span><span style="color: #000000">, </span><span style="color: #A31515">&#39;variable&#39;</span><span style="color: #000000">];</span></span>
+<span class="line"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">tokenModifiers</span><span style="color: #000000"> = [</span><span style="color: #A31515">&#39;declaration&#39;</span><span style="color: #000000">, </span><span style="color: #A31515">&#39;documentation&#39;</span><span style="color: #000000">];</span></span>
+<span class="line"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">legend</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">vscode</span><span style="color: #000000">.</span><span style="color: #795E26">SemanticTokensLegend</span><span style="color: #000000">(</span><span style="color: #001080">tokenTypes</span><span style="color: #000000">, </span><span style="color: #001080">tokenModifiers</span><span style="color: #000000">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">provider</span><span style="color: #000000">: </span><span style="color: #267F99">vscode</span><span style="color: #000000">.</span><span style="color: #267F99">DocumentSemanticTokensProvider</span><span style="color: #000000"> = {</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #795E26">provideDocumentSemanticTokens</span><span style="color: #000000">(</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #001080">document</span><span style="color: #000000">: </span><span style="color: #267F99">vscode</span><span style="color: #000000">.</span><span style="color: #267F99">TextDocument</span></span>
+<span class="line"><span style="color: #000000">  ): </span><span style="color: #267F99">vscode</span><span style="color: #000000">.</span><span style="color: #267F99">ProviderResult</span><span style="color: #000000">&lt;</span><span style="color: #267F99">vscode</span><span style="color: #000000">.</span><span style="color: #267F99">SemanticTokens</span><span style="color: #000000">&gt; {</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #008000">// analyze the document and return semantic tokens</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">tokensBuilder</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">vscode</span><span style="color: #000000">.</span><span style="color: #795E26">SemanticTokensBuilder</span><span style="color: #000000">(</span><span style="color: #001080">legend</span><span style="color: #000000">);</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #008000">// on line 1, characters 1-5 are a class declaration</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #001080">tokensBuilder</span><span style="color: #000000">.</span><span style="color: #795E26">push</span><span style="color: #000000">(</span></span>
+<span class="line"><span style="color: #000000">      </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">vscode</span><span style="color: #000000">.</span><span style="color: #795E26">Range</span><span style="color: #000000">(</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">vscode</span><span style="color: #000000">.</span><span style="color: #795E26">Position</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">), </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">vscode</span><span style="color: #000000">.</span><span style="color: #795E26">Position</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">)),</span></span>
+<span class="line"><span style="color: #000000">      </span><span style="color: #A31515">&#39;class&#39;</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">      [</span><span style="color: #A31515">&#39;declaration&#39;</span><span style="color: #000000">]</span></span>
+<span class="line"><span style="color: #000000">    );</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">tokensBuilder</span><span style="color: #000000">.</span><span style="color: #795E26">build</span><span style="color: #000000">();</span></span>
+<span class="line"><span style="color: #000000">  }</span></span>
+<span class="line"><span style="color: #000000">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">selector</span><span style="color: #000000"> = { </span><span style="color: #001080">language:</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;java&#39;</span><span style="color: #000000">, </span><span style="color: #001080">scheme:</span><span style="color: #000000"> </span><span style="color: #A31515">&#39;file&#39;</span><span style="color: #000000"> }; </span><span style="color: #008000">// register for all Java documents from the local file system</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #001080">vscode</span><span style="color: #000000">.</span><span style="color: #001080">languages</span><span style="color: #000000">.</span><span style="color: #795E26">registerDocumentSemanticTokensProvider</span><span style="color: #000000">(</span><span style="color: #001080">selector</span><span style="color: #000000">, </span><span style="color: #001080">provider</span><span style="color: #000000">, </span><span style="color: #001080">legend</span><span style="color: #000000">);</span></span>
+<span class="line"></span></code></pre>
+              <p>
+                The semantic token provider API comes in two flavors to
+                accommodate a language server's capabilities:
+              </p>
+              <ul>
+                <li>
+                  <p>
+                    <code>DocumentSemanticTokensProvider</code> - Always takes a
+                    full document as input.
+                  </p>
+                  <ul>
+                    <li>
+                      <code>provideDocumentSemanticTokens</code> - Provides all
+                      tokens of a document.
+                    </li>
+                    <li>
+                      <code>provideDocumentSemanticTokensEdits</code>- Provides
+                      all tokens of a document as a delta to the previous
+                      response.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <p>
+                    <code>DocumentRangeSemanticTokensProvider</code> - Works
+                    only on a range.
+                  </p>
+                  <ul>
+                    <li>
+                      <code>provideDocumentRangeSemanticTokens</code> - Provides
+                      all tokens of a document range.
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <p>
+                Each token returned by the provider comes with a classification
+                that consists of a token type, any number of token modifiers,
+                and a token language.
+              </p>
+              <p>
+                As seen in the example above, the provider names the types and
+                modifiers it's going to use in a
+                <code>SemanticTokensLegend</code>. That allows the
+                <code>provide</code> APIs to return token types and modifies as
+                an index to the legend.
+              </p>
+              <h2
+                id="semantic-token-classification"
+                data-needslink="semantic-token-classification"
+              >
+                Semantic token classification
+              </h2>
+              <p>
+                The output of a semantic token provider consists of tokens. Each
+                token has a range and a token classification that describes what
+                kind of syntax element the token represents. Optionally, the
+                classification can also name a language, if the token is part of
+                an embedded language.
+              </p>
+              <p>
+                To describe the kind of syntax element, semantic token types and
+                modifiers are used. This information is similar to the TextMate
+                scopes described in the
+                <a href="/api/language-extensions/syntax-highlight-guide"
+                  >Syntax Highlight guide</a
+                >, but we wanted to come up with a dedicated and cleaner
+                classification system.
+              </p>
+              <p>
+                VS Code comes with a set of standard semantic token types and
+                modifiers for all semantic token providers to use. Still,
+                semantic token providers are free to define new types and
+                modifiers and create a subtype of the standard types.
+              </p>
+              <h3
+                id="standard-token-types-and-modifiers"
+                data-needslink="standard-token-types-and-modifiers"
+              >
+                Standard token types and modifiers
+              </h3>
+              <p>
+                The standard types and modifiers cover common concepts used by
+                many languages. While each language might use a different
+                terminology for some types and modifiers, by adhering to the
+                standard classifications, it will be possible for theme authors
+                to define theming rules that work across languages.
+              </p>
+              <p>
+                These are the standard semantic token types and semantic token
+                modifiers predefined by VS Code:
+              </p>
+              <p>Standard token types:</p>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>namespace</code></td>
+                    <td>
+                      For identifiers that declare or reference a namespace,
+                      module, or package.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>class</code></td>
+                    <td>
+                      For identifiers that declare or reference a class type.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>enum</code></td>
+                    <td>
+                      For identifiers that declare or reference an enumeration
+                      type.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>interface</code></td>
+                    <td>
+                      For identifiers that declare or reference an interface
+                      type.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>struct</code></td>
+                    <td>
+                      For identifiers that declare or reference a struct type.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>typeParameter</code></td>
+                    <td>
+                      For identifiers that declare or reference a type
+                      parameter.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>type</code></td>
+                    <td>
+                      For identifiers that declare or reference a type that is
+                      not covered above.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>parameter</code></td>
+                    <td>
+                      For identifiers that declare or reference a function or
+                      method parameters.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>variable</code></td>
+                    <td>
+                      For identifiers that declare or reference a local or
+                      global variable.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>property</code></td>
+                    <td>
+                      For identifiers that declare or reference a member
+                      property, member field, or member variable.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>enumMember</code></td>
+                    <td>
+                      For identifiers that declare or reference an enumeration
+                      property, constant, or member.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>decorator</code></td>
+                    <td>
+                      For identifiers that declare or reference decorators and
+                      annotations.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>event</code></td>
+                    <td>For identifiers that declare an event property.</td>
+                  </tr>
+                  <tr>
+                    <td><code>function</code></td>
+                    <td>For identifiers that declare a function.</td>
+                  </tr>
+                  <tr>
+                    <td><code>method</code></td>
+                    <td>
+                      For identifiers that declare a member function or method.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>macro</code></td>
+                    <td>For identifiers that declare a macro.</td>
+                  </tr>
+                  <tr>
+                    <td><code>label</code></td>
+                    <td>For identifiers that declare a label.</td>
+                  </tr>
+                  <tr>
+                    <td><code>comment</code></td>
+                    <td>For tokens that represent a comment.</td>
+                  </tr>
+                  <tr>
+                    <td><code>string</code></td>
+                    <td>For tokens that represent a string literal.</td>
+                  </tr>
+                  <tr>
+                    <td><code>keyword</code></td>
+                    <td>For tokens that represent a language keyword.</td>
+                  </tr>
+                  <tr>
+                    <td><code>number</code></td>
+                    <td>For tokens that represent a number literal.</td>
+                  </tr>
+                  <tr>
+                    <td><code>regexp</code></td>
+                    <td>
+                      For tokens that represent a regular expression literal.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>operator</code></td>
+                    <td>For tokens that represent an operator.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Standard token modifiers:</p>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>declaration</code></td>
+                    <td>For declarations of symbols.</td>
+                  </tr>
+                  <tr>
+                    <td><code>definition</code></td>
+                    <td>
+                      For definitions of symbols, for example, in header files.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>readonly</code></td>
+                    <td>
+                      For readonly variables and member fields (constants).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>static</code></td>
+                    <td>For class members (static members).</td>
+                  </tr>
+                  <tr>
+                    <td><code>deprecated</code></td>
+                    <td>For symbols that should no longer be used.</td>
+                  </tr>
+                  <tr>
+                    <td><code>abstract</code></td>
+                    <td>For types and member functions that are abstract.</td>
+                  </tr>
+                  <tr>
+                    <td><code>async</code></td>
+                    <td>For functions that are marked async.</td>
+                  </tr>
+                  <tr>
+                    <td><code>modification</code></td>
+                    <td>
+                      For variable references where the variable is assigned to.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>documentation</code></td>
+                    <td>For occurrences of symbols in documentation.</td>
+                  </tr>
+                  <tr>
+                    <td><code>defaultLibrary</code></td>
+                    <td>For symbols that are part of the standard library.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                Along with the standard types and modifiers, VS Code defines a
+                mapping of types and modifiers to similar TextMate scopes.
+                That's covered in the section
+                <a href="#semantic-token-scope-map">Semantic Token Scope Map</a
+                >.
+              </p>
+              <h3
+                id="custom-token-types-and-modifiers"
+                data-needslink="custom-token-types-and-modifiers"
+              >
+                Custom token types and modifiers
+              </h3>
+              <p>
+                If necessary, extensions can declare new types and modifiers or
+                create sub types of existing types through the
+                <code>semanticTokenTypes</code> and
+                <code>semanticTokenModifiers</code> contribution points in their
+                extension's <code>package.json</code>:
+              </p>
+              <pre
+                class="shiki"
+                style="background-color: #ffffff"
+              ><code><span class="line"><span style="color: #000000">{</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #0451A5">&quot;contributes&quot;</span><span style="color: #000000">: {</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #0451A5">&quot;semanticTokenTypes&quot;</span><span style="color: #000000">: [</span></span>
+<span class="line"><span style="color: #000000">      {</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #0451A5">&quot;id&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;templateType&quot;</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #0451A5">&quot;superType&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;type&quot;</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #0451A5">&quot;description&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;A template type.&quot;</span></span>
+<span class="line"><span style="color: #000000">      }</span></span>
+<span class="line"><span style="color: #000000">    ],</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #0451A5">&quot;semanticTokenModifiers&quot;</span><span style="color: #000000">: [</span></span>
+<span class="line"><span style="color: #000000">      {</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #0451A5">&quot;id&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;native&quot;</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #0451A5">&quot;description&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;Annotates a symbol that is implemented natively&quot;</span></span>
+<span class="line"><span style="color: #000000">      }</span></span>
+<span class="line"><span style="color: #000000">    ]</span></span>
+<span class="line"><span style="color: #000000">  }</span></span>
+<span class="line"><span style="color: #000000">}</span></span>
+<span class="line"></span></code></pre>
+              <p>
+                In the example above, an extension declares a new type
+                <code>templateType</code> and a new modifier
+                <code>native</code>. By naming <code>type</code> as the super
+                type, theme styling rules for <code>type</code> will also apply
+                to <code>templateType</code>:
+              </p>
+              <pre
+                class="shiki"
+                style="background-color: #ffffff"
+              ><code><span class="line"><span style="color: #000000">{</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #0451A5">&quot;name&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;Red Theme&quot;</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #0451A5">&quot;semanticTokenColors&quot;</span><span style="color: #000000">: {</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #0451A5">&quot;type&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;#ff0011&quot;</span></span>
+<span class="line"><span style="color: #000000">  }</span></span>
+<span class="line"><span style="color: #000000">}</span></span>
+<span class="line"></span></code></pre>
+              <p>
+                The <code>semanticTokenColors</code> value
+                <code>&quot;#ff0011&quot;</code> shown above applies to both
+                <code>type</code> and all it's subtypes, including
+                <code>templateType</code>.
+              </p>
+              <p>
+                Along with custom token types, extensions can define how these
+                are mapped to TextMate scopes. This is described in the
+                <a href="#custom-textmate-scope-mappings">Custom Mappings</a>
+                section. Note that custom mapping rules are not automatically
+                inherited from the super type. Instead, subtypes need to
+                redefine the mapping, preferably to more specific scopes.
+              </p>
+              <h2
+                id="enablement-of-semantic-highlighting"
+                data-needslink="enablement-of-semantic-highlighting"
+              >
+                Enablement of semantic highlighting
+              </h2>
+              <p>
+                Whether semantic tokens are computed and highlighted is decided
+                by the setting <code>editor.semanticHighlighting.enabled</code>.
+                It can have values <code>true</code>, <code>false</code>, and
+                <code>configuredByTheme</code>.
+              </p>
+              <ul>
+                <li>
+                  <code>true</code> and <code>false</code> turn semantic
+                  highlighting on or off for all themes.
+                </li>
+                <li>
+                  <code>configuredByTheme</code> is the default and lets each
+                  theme control whether semantic highlighting is enabled or not.
+                  All the themes that ship with VS Code (for example, the
+                  &quot;Dark+&quot; default) have semantic highlighting enabled
+                  by default.
+                </li>
+              </ul>
+              <p>
+                Language extensions that depend on semantic tokens can override
+                the default for their language in their
+                <code>package.json</code>:
+              </p>
+              <pre
+                class="shiki"
+                style="background-color: #ffffff"
+              ><code><span class="line"><span style="color: #000000">{</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #0451A5">&quot;configurationDefaults&quot;</span><span style="color: #000000">: {</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #0451A5">&quot;[languageId]&quot;</span><span style="color: #000000">: {</span></span>
+<span class="line"><span style="color: #000000">      </span><span style="color: #0451A5">&quot;editor.semanticHighlighting.enabled&quot;</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span></span>
+<span class="line"><span style="color: #000000">    }</span></span>
+<span class="line"><span style="color: #000000">  }</span></span>
+<span class="line"><span style="color: #000000">}</span></span>
+<span class="line"></span></code></pre>
+              <h2 id="theming" data-needslink="theming">Theming</h2>
+              <p>
+                Theming is about assigning colors and styles to tokens. Theming
+                rules are specified in Color Theme files (JSON format). Users
+                can also customize the theming rules in the user settings.
+              </p>
+              <h3
+                id="semantic-coloring-in-color-themes"
+                data-needslink="semantic-coloring-in-color-themes"
+              >
+                Semantic coloring in Color Themes
+              </h3>
+              <p>
+                Two new properties have been added to the Color Theme file
+                format in order to support highlighting based on semantic
+                tokens.
+              </p>
+              <p>
+                The property <code>semanticHighlighting</code> defines whether
+                the theme is ready for highlighting using semantic tokens. It is
+                false by default, but we encourage all themes to enable it. The
+                property is used when the setting
+                <code>editor.semanticHighlighting.enabled</code> is set to
+                <code>configuredByTheme</code>.
+              </p>
+              <p>
+                The property <code>semanticTokenColors</code> allows a theme to
+                define new coloring rules that match against the semantic token
+                types and modifiers that are emitted by the semantic token
+                providers.
+              </p>
+              <pre
+                class="shiki"
+                style="background-color: #ffffff"
+              ><code><span class="line"><span style="color: #000000">{</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #0451A5">&quot;name&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;Red Theme&quot;</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #0451A5">&quot;tokenColors&quot;</span><span style="color: #000000">: [</span></span>
+<span class="line"><span style="color: #000000">    {</span></span>
+<span class="line"><span style="color: #000000">      </span><span style="color: #0451A5">&quot;scope&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;comment&quot;</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">      </span><span style="color: #0451A5">&quot;settings&quot;</span><span style="color: #000000">: {</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #0451A5">&quot;foreground&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;#dd0000&quot;</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #0451A5">&quot;fontStyle&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;italic&quot;</span></span>
+<span class="line"><span style="color: #000000">      }</span></span>
+<span class="line"><span style="color: #000000">    }</span></span>
+<span class="line"><span style="color: #000000">  ],</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #0451A5">&quot;semanticHighlighting&quot;</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #0451A5">&quot;semanticTokenColors&quot;</span><span style="color: #000000">: {</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #0451A5">&quot;variable.readonly:java&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;#ff0011&quot;</span></span>
+<span class="line"><span style="color: #000000">  }</span></span>
+<span class="line"><span style="color: #000000">}</span></span>
+<span class="line"></span></code></pre>
+              <p>
+                <code>variable.readonly:java</code> is called a selector and has
+                the form
+                <code>(*|tokenType)(.tokenModifier)*(:tokenLanguage)?</code>.
+              </p>
+              <p>
+                The value describes the style if the rule matches. It is either
+                a string, representing the foreground color, or an object, in
+                the form
+                <code
+                  >{ foreground: string, bold: boolean, italic: boolean,
+                  underline: boolean }</code
+                >
+                or <code>{ foreground: string, fontStyle: string }</code> as
+                used for TextMate theme rule in <code>tokenColors</code>.
+              </p>
+              <p>
+                The foreground needs to follow a color format as described in
+                <a href="/api/references/theme-color#color-formats"
+                  >Color formats</a
+                >. Transparency is not supported.
+              </p>
+              <p>Here are other examples of selectors and styles:</p>
+              <ul>
+                <li>
+                  <code
+                    >&quot;*.declaration&quot;: { &quot;bold&quot;: true } //
+                    all declarations are bold</code
+                  >
+                </li>
+                <li>
+                  <code
+                    >&quot;class:java&quot;: { &quot;foreground&quot;:
+                    &quot;#0f0&quot;, &quot;italic&quot;: true } // classes in
+                    java</code
+                  >
+                </li>
+              </ul>
+              <p>
+                If no rule matches or the theme has no
+                <code>semanticTokenColors</code> section (but
+                <code>semanticHighlighting</code> enabled), VS Code uses the
+                <a href="#semantic-token-scope-map">Semantic Token Scope Map</a>
+                to evaluate a TextMate scope for the given semantic token. That
+                scope is matched against the themes TextMate theming rules in
+                <code>tokenColors</code>.
+              </p>
+              <h2
+                id="semantic-token-scope-map"
+                data-needslink="semantic-token-scope-map"
+              >
+                Semantic token scope map
+              </h2>
+              <p>
+                In order to make semantic highlighting work for themes that have
+                not defined any specific semantic rules and to serve as fallback
+                for custom token types and modifiers, VS Code maintains a map
+                from semantic token selectors to TextMate scopes.
+              </p>
+              <p>
+                If a theme has semantic highlighting enabled, but does not
+                contain a rule for the given semantic token, these TextMate
+                scopes are used to find a TextMate theming rule instead.
+              </p>
+              <h3
+                id="predefined-textmate-scope-mappings"
+                data-needslink="predefined-textmate-scope-mappings"
+              >
+                Predefined TextMate scope mappings
+              </h3>
+              <p>
+                The following table lists the currently predefined mappings.
+              </p>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Semantic Token Selector</th>
+                    <th>Fallback TextMate Scope</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>namespace</code></td>
+                    <td><code>entity.name.namespace</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>type</code></td>
+                    <td><code>entity.name.type</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>type.defaultLibrary</code></td>
+                    <td><code>support.type</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>struct</code></td>
+                    <td><code>storage.type.struct</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>class</code></td>
+                    <td><code>entity.name.type.class</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>class.defaultLibrary</code></td>
+                    <td><code>support.class</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>interface</code></td>
+                    <td><code>entity.name.type.interface</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>enum</code></td>
+                    <td><code>entity.name.type.enum</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>function</code></td>
+                    <td><code>entity.name.function</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>function.defaultLibrary</code></td>
+                    <td><code>support.function</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>method</code></td>
+                    <td><code>entity.name.function.member</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>macro</code></td>
+                    <td><code>entity.name.function.macro</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>variable</code></td>
+                    <td>
+                      <code>variable.other.readwrite</code> ,
+                      <code>entity.name.variable</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>variable.readonly</code></td>
+                    <td><code>variable.other.constant</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>variable.readonly.defaultLibrary</code></td>
+                    <td><code>support.constant</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>parameter</code></td>
+                    <td><code>variable.parameter</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>property</code></td>
+                    <td><code>variable.other.property</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>property.readonly</code></td>
+                    <td><code>variable.other.constant.property</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>enumMember</code></td>
+                    <td><code>variable.other.enummember</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>event</code></td>
+                    <td><code>variable.other.event</code></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h3
+                id="custom-textmate-scope-mappings"
+                data-needslink="custom-textmate-scope-mappings"
+              >
+                Custom TextMate scope mappings
+              </h3>
+              <p>
+                This map can be extended by extensions through the
+                <code>semanticTokenScopes</code> contribution point in their
+                <code>package.json</code>.
+              </p>
+              <p>There are two use cases for extensions to do that:</p>
+              <ul>
+                <li>
+                  <p>
+                    The extension that defines custom token types and token
+                    modifiers provides TextMate scopes as fallback when a theme
+                    does not define a theming rule for the added semantic token
+                    type or modifiers:
+                  </p>
+                  <pre
+                    class="shiki"
+                    style="background-color: #ffffff"
+                  ><code><span class="line"><span style="color: #000000">{</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #0451A5">&quot;contributes&quot;</span><span style="color: #000000">: {</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #0451A5">&quot;semanticTokenScopes&quot;</span><span style="color: #000000">: [</span></span>
+<span class="line"><span style="color: #000000">      {</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #0451A5">&quot;scopes&quot;</span><span style="color: #000000">: {</span></span>
+<span class="line"><span style="color: #000000">          </span><span style="color: #0451A5">&quot;templateType&quot;</span><span style="color: #000000">: [</span><span style="color: #A31515">&quot;entity.name.type.template&quot;</span><span style="color: #000000">]</span></span>
+<span class="line"><span style="color: #000000">        }</span></span>
+<span class="line"><span style="color: #000000">      }</span></span>
+<span class="line"><span style="color: #000000">    ]</span></span>
+<span class="line"><span style="color: #000000">  }</span></span>
+<span class="line"><span style="color: #000000">}</span></span>
+<span class="line"></span></code></pre>
+                </li>
+                <li>
+                  <p>
+                    The provider of a TextMate grammar can describe the
+                    language-specific scopes. That helps with themes that
+                    contain language-specific theming rules.
+                  </p>
+                  <pre
+                    class="shiki"
+                    style="background-color: #ffffff"
+                  ><code><span class="line"><span style="color: #000000">{</span></span>
+<span class="line"><span style="color: #000000">  </span><span style="color: #0451A5">&quot;contributes&quot;</span><span style="color: #000000">: {</span></span>
+<span class="line"><span style="color: #000000">    </span><span style="color: #0451A5">&quot;semanticTokenScopes&quot;</span><span style="color: #000000">: [</span></span>
+<span class="line"><span style="color: #000000">      {</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #0451A5">&quot;language&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;typescript&quot;</span><span style="color: #000000">,</span></span>
+<span class="line"><span style="color: #000000">        </span><span style="color: #0451A5">&quot;scopes&quot;</span><span style="color: #000000">: {</span></span>
+<span class="line"><span style="color: #000000">          </span><span style="color: #0451A5">&quot;property.readonly&quot;</span><span style="color: #000000">: [</span><span style="color: #A31515">&quot;variable.other.constant.property.ts&quot;</span><span style="color: #000000">]</span></span>
+<span class="line"><span style="color: #000000">        }</span></span>
+<span class="line"><span style="color: #000000">      }</span></span>
+<span class="line"><span style="color: #000000">    ]</span></span>
+<span class="line"><span style="color: #000000">  }</span></span>
+<span class="line"><span style="color: #000000">}</span></span>
+<span class="line"></span></code></pre>
+                </li>
+              </ul>
+              <h2 id="try-it-out" data-needslink="try-it-out">Try it out</h2>
+              <p>
+                We have a
+                <a
+                  href="https://github.com/microsoft/vscode-extension-samples/tree/main/semantic-tokens-sample"
+                  class="external-link"
+                  target="_blank"
+                  >Semantic Tokens sample</a
+                >
+                that illustrates how to create a semantic token provider.
+              </p>
+              <p>
+                The
+                <a
+                  href="/api/language-extensions/syntax-highlight-guide#scope-inspector"
+                  >scope inspector</a
+                >
+                tool allows you to explore what semantic tokens are present in a
+                source file and what theme rules they match to. To see semantic
+                token, use a built-in theme (for example, Dark+) on a TypeScript
+                file.
+              </p>
+
+              <div class="feedback"></div>
+
+              <div class="body-footer">02/1/2024</div>
+            </div>
+
+            <!-- medium right nav -->
+            <div class="col-sm-3 col-md-2 hidden-xs docs-subnavbar-container">
+              <nav
+                id="docs-subnavbar"
+                aria-label="On Page"
+                data-spy="affix"
+                data-offset-top="20"
+              >
+                <h4>
+                  <span class="sr-only"
+                    >In this article there are 6 sections</span
+                  ><span aria-hidden="true">In this article</span>
+                </h4>
+                <ul class="nav">
+                  <li>
+                    <a href="#semantic-token-provider"
+                      >Semantic token provider</a
+                    >
+                  </li>
+
+                  <li>
+                    <a href="#semantic-token-classification"
+                      >Semantic token classification</a
+                    >
+                  </li>
+
+                  <li>
+                    <a href="#enablement-of-semantic-highlighting"
+                      >Enablement of semantic highlighting</a
+                    >
+                  </li>
+
+                  <li><a href="#theming">Theming</a></li>
+
+                  <li>
+                    <a href="#semantic-token-scope-map"
+                      >Semantic token scope map</a
+                    >
+                  </li>
+
+                  <li><a href="#try-it-out">Try it out</a></li>
+                </ul>
+
+                <div class="connect-widget"></div>
+              </nav>
+            </div>
+            <!-- end of page connect widget -->
+            <div class="col-xs-12 visible-xs">
+              <div class="connect-widget"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer role="contentinfo">
+      <div class="container">
+        <div class="row">
+          <div class="left col-md-6">
+            <ul class="links">
+              <li>
+                <span class="message">Hello from Seattle.</span>
+              </li>
+              <li>
+                <a
+                  href="https://go.microsoft.com/fwlink/?LinkID=533687"
+                  onclick="followOnTwitter()"
+                  tabindex="0"
+                  >Follow @code</a
+                >
+              </li>
+              <li>
+                <div class="github-star-button">
+                  <iframe
+                    src="/assets/github-button.html?user=Microsoft&repo=vscode&type=star&count=true"
+                    frameborder="0"
+                    scrolling="0"
+                    width="130px"
+                    height="20px"
+                    title="GitHub follow button"
+                    loading="lazy"
+                  ></iframe>
+                </div>
+              </li>
+
+              <script>
+                function followOnTwitter() {
+                  var windowFeatures =
+                    "location=yes,height=600,width=550,scrollbars=yes,status=yes";
+                  var originalReferer = "&original_referer=" + document.URL;
+                  var screenName = "&screen_name=code";
+                  var URL =
+                    "https://twitter.com/intent/follow?" +
+                    originalReferer +
+                    screenName;
+                  window.open(URL, "_blank", windowFeatures);
+                }
+
+                function manageConsent() {
+                  if (WcpConsent.siteConsent.isConsentRequired) {
+                    WcpConsent.siteConsent.manageConsent();
+                  }
+                }
+              </script>
+            </ul>
+          </div>
+          <div class="right col-md-6">
+            <ul class="links">
+              <li>
+                <a
+                  id="footer-support-link"
+                  href="https://support.serviceshub.microsoft.com/supportforbusiness/create?sapId=d66407ed-3967-b000-4cfb-2c318cad363d"
+                  target="_blank"
+                  >Support</a
+                >
+              </li>
+              <li>
+                <a
+                  id="footer-privacy-link"
+                  href="https://go.microsoft.com/fwlink/?LinkId=521839"
+                  target="_blank"
+                  >Privacy</a
+                >
+              </li>
+              <li style="display: none">
+                <a
+                  id="footer-cookie-link"
+                  style="cursor: pointer"
+                  onclick="manageConsent()"
+                  target="_blank"
+                  >Manage Cookies</a
+                >
+              </li>
+              <li>
+                <a
+                  id="footer-terms-link"
+                  href="https://www.microsoft.com/legal/terms-of-use"
+                  target="_blank"
+                  >Terms of Use</a
+                >
+              </li>
+              <li><a id="footer-license-link" href="/License">License</a></li>
+            </ul>
+            <div class="copyright">
+              <a
+                id="footer-microsoft-link"
+                class="logo"
+                href="https://www.microsoft.com"
+              >
+                <img
+                  class="microsoft-logo"
+                  src="/assets/images/microsoft-logo.png"
+                  height="20"
+                  alt="Microsoft homepage"
+                />
+                <img
+                  class="microsoft-logo-inverted"
+                  src="/assets/images/microsoft-logo-inverted.png"
+                  height="20"
+                  alt="Microsoft homepage"
+                />
+              </a>
+              <span>&copy; 2024 Microsoft</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="/dist/index.js"></script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Visual Studio Code",
+        "softwareVersion": "1.86",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "applicationCategory": "DeveloperApplication",
+        "applicationSubCategory": "Text Editor",
+        "alternateName": "VS Code",
+        "datePublished": "2021-11-03",
+        "operatingSystem": "Mac, Linux, Windows",
+        "logo": "https://code.visualstudio.com/assets/apple-touch-icon.png",
+        "screenshot": "https://code.visualstudio.com/assets/home/home-screenshot-win.png",
+        "releaseNotes": "https://code.visualstudio.com/updates",
+        "downloadUrl": "https://code.visualstudio.com/download",
+        "license": "https://code.visualstudio.com/license",
+        "softwareRequirements": "https://code.visualstudio.com/docs/supporting/requirements",
+        "url": "https://code.visualstudio.com",
+        "author": {
+          "@type": "Organization",
+          "name": "Microsoft"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Microsoft"
+        },
+        "maintainer": {
+          "@type": "Organization",
+          "name": "Microsoft"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://code.visualstudio.com/Search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        },
+        "sameAs": [
+          "https://en.wikipedia.org/wiki/Visual_Studio_Code",
+          "https://twitter.com/code",
+          "https://www.youtube.com/code",
+          "https://www.tiktok.com/@vscode",
+          "https://github.com/microsoft/vscode"
+        ]
+      }
+    </script>
+  </body>
+</html>

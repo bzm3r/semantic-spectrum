@@ -10,13 +10,147 @@
     "categories": [
         "Other"
     ],
-    "activationEvents": [],
-    "main": "./out/extension.js",
+    "activationEvents": [
+        "onStartupFinished",
+        "onLanguage"
+    ],
+    "main": "./out/src/extension.js",
     "contributes": {
         "commands": [
             {
                 "command": "semantic-spectrum.helloWorld",
                 "title": "Hello World"
+            }
+        ],
+        "semanticTokenScopes": [
+            {
+                "scopes": {
+                    "parameter": [
+                        "variable.parameter.function",
+                        "variable.parameter",
+                        "variable.parameter.function-call",
+                        "meta.function.parameter",
+                        "meta.function.parameters"
+                    ],
+                    "function": [
+                        "entity.name.function",
+                        "meta.function-call",
+                        "entity.name.command"
+                    ],
+                    "variable": [
+                        "variable.other.readwrite",
+                        "variable.other",
+                        "variable",
+                        "support.variable",
+                        "string.other.link.title.markdown"
+                    ],
+                    "variable.readonly": [
+                        "entity.name.tag"
+                    ],
+                    "macro": [
+                        "entity.name.other.preprocessor.macro"
+                    ],
+                    "macro.defaultLibrary": [
+                        "entity.name.other.preprocessor.macro.predefined"
+                    ],
+                    "variable.declaration": [
+                        "variable.other.assignment.shell"
+                    ],
+                    "type": [
+                        "entity.name.type.alias",
+                        "support.type",
+                        "markup.italic.markdown",
+                        "entity.name.type.kotlin"
+                    ],
+                    "type.readonly": [
+                        "markup.bold.markdown"
+                    ],
+                    "interface.readonly": [
+                        "comment.line.double-dash.doc variable"
+                    ],
+                    "type.defaultLibrary.static.async": [
+                        "markup.strikethrough.markdown"
+                    ],
+                    "type.static": [
+                        "markup.math.inline.markdown",
+                        "entity.name.type.cpp",
+                        "entity.name.type.parameter"
+                    ],
+                    "type.async": [
+                        "support.type.primitive",
+                        "storage.type.built-in.primitive",
+                        "support.type.builtin"
+                    ],
+                    "type.defaultLibrary": [
+                        "support.type.built-in",
+                        "comment.line.double-dash.doc support.type"
+                    ],
+                    "function.static": [
+                        "storage.type.template"
+                    ],
+                    "typeParameter": [
+                        "entity.name.type.template",
+                        "storage.type.template.argument"
+                    ],
+                    "namespace": [
+                        "meta.symbol.namespace",
+                        "entity.name.scope-resolution"
+                    ],
+                    "class.defaultLibrary": [
+                        "support.class"
+                    ],
+                    "function:lua": [
+                        "support.function.any-method"
+                    ],
+                    "function.defaultLibrary": [
+                        "support.function.builtin",
+                        "support.function.misc",
+                        "support.function",
+                        "keyword.operator.cast.static_cast",
+                        "entity.name.function.definition.special"
+                    ],
+                    "property.readonly": [
+                        "markup.list.numbered.markdown"
+                    ],
+                    "property": [
+                        "variable.other.property",
+                        "support.variable.property",
+                        "variable.other.object.property",
+                        "variable.other.table.property",
+                        "meta.attribute",
+                        "constant.other.option",
+                        "support.type.property-name",
+                        "variable.object.property",
+                        "meta.flow-mapping.yaml",
+                        "entity.other.attribute",
+                        "support.type.property-name.css",
+                        "meta.property-name",
+                        "entity.other.attribute-name",
+                        "entity.name.tag.yaml",
+                        "markup.list.unnumbered.markdown"
+                    ],
+                    "class": [
+                        "entity.name.type.class",
+                        "entity.name.class",
+                        "entity.other.inherited-class",
+                        "entity.name.function-table",
+                        "entity.other.attribute-name.class"
+                    ],
+                    "method": [
+                        "meta.directive.vue",
+                        "entity.name.method-function",
+                        "entity.other.attribute-name.pseudo-class",
+                        "entity.name.function.member"
+                    ],
+                    "selfParameter": [
+                        "variable.language.this",
+                        "variable.language.self",
+                        "variable.language.special.self"
+                    ],
+                    "variable.defaultLibrary.readonly": [
+                        "const"
+                    ]
+                }
             }
         ]
     },
@@ -26,7 +160,12 @@
         "watch": "tsc -watch -p ./",
         "pretest": "pnpm run compile && pnpm run lint",
         "lint": "eslint src --ext ts",
-        "test": "vscode-test"
+        "test": "vscode-test",
+        "schema:ui": "ts-node ./generator/genUiSchema.ts",
+        "schema:tokens": "ts-node ./generator/genTokenSchema.ts",
+        "schema": "pnpm run schema:ui && pnpm run schema:tokens",
+        "playground": "ts-node ./generator/playground.ts",
+        "generate": "ts-node ./generator/writePackageJson.ts"
     },
     "devDependencies": {
         "@types/mocha": "^10.0.6",
@@ -38,6 +177,7 @@
         "@vscode/test-cli": "^0.0.4",
         "@vscode/test-electron": "^2.3.8",
         "eslint": "^8.56.0",
+        "ts-node": "^10.9.2",
         "typescript": "^5.3.3"
     },
     "dependencies": {

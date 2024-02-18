@@ -1,0 +1,46 @@
+{
+    "name": "semantic-spectrum",
+    "displayName": "semantic-spectrum",
+    "description": "",
+    "version": "0.0.1",
+    "license": "GPL-3.0-only",
+    "engines": {
+        "vscode": "^1.86.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "semantic-spectrum.helloWorld",
+                "title": "Hello World"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "pnpm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "pnpm run compile && pnpm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "vscode-test"
+    },
+    "devDependencies": {
+        "@types/mocha": "^10.0.6",
+        "@types/node": "18.x",
+        "@types/tinycolor2": "^1.4.6",
+        "@types/vscode": "^1.86.0",
+        "@typescript-eslint/eslint-plugin": "^6.15.0",
+        "@typescript-eslint/parser": "^6.15.0",
+        "@vscode/test-cli": "^0.0.4",
+        "@vscode/test-electron": "^2.3.8",
+        "eslint": "^8.56.0",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "tinycolor2": "^1.6.0"
+    }
+}

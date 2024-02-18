@@ -1,0 +1,304 @@
+{
+    "$schema": "./config.schema.json",
+    "themes": [
+        {
+            "label": "Semantic Rainbow",
+            "mainTheme": true,
+            "uiTheme": "vs-dark",
+            "colorPath": "",
+            "defaultLanguages": [
+                "cpp"
+            ],
+            "path": "./themes/semantic-rainbow.json",
+            "id": "semantic-rainbow",
+            "baseTokenColors": {
+                "variable": "#cc4755",
+                "parameter": "#df7850",
+                "typeParameter": "#c76025",
+                "type": "#db9b25",
+                "interface": "#dbb425",
+                "enum": "#b4bd38",
+                "enumMember": "#aec496",
+                "property": "#88ac47",
+                "class": "#3aad5d",
+                "namespace": "#2b9468",
+                "selfParameter": "#64c49b",
+                "method": "#20a6be",
+                "function": "#407de6",
+                "macro": "#5457ec"
+            },
+            "modifications": {
+                "readonly": {
+                    "default": {
+                        "darken": 10,
+                        "saturate": 5,
+                        "spin": -6
+                    },
+                    "parameter": {
+                        "darken": 15,
+                        "saturate": 2,
+                        "spin": -1
+                    },
+                    "enum": {
+                        "darken": 23,
+                        "saturate": 5,
+                        "spin": -6
+                    },
+                    "enumMember": {
+                        "darken": 23,
+                        "saturate": 5,
+                        "spin": -6
+                    },
+                    "macro": {
+                        "darken": 5,
+                        "saturate": 5,
+                        "spin": -6
+                    }
+                },
+                "private": {
+                    "default": {
+                        "alpha": 0.8
+                    }
+                },
+                "static": {
+                    "default": {
+                        "spin": 10,
+                        "darken": 5
+                    }
+                },
+                "declaration": {
+                    "default": {
+                        "saturate": 6,
+                        "spin": 3
+                    }
+                },
+                "async": {
+                    "default": {
+                        "lighten": 5,
+                        "saturate": 5,
+                        "spin": -5
+                    }
+                },
+                "defaultLibrary": {
+                    "default": {
+                        "desaturate": 15,
+                        "brighten": 10,
+                        "spin": 10
+                    },
+                    "variable": {
+                        "desaturate": 10,
+                        "brighten": 5,
+                        "spin": 0
+                    },
+                    "type": {
+                        "desaturate": 50,
+                        "brighten": 15,
+                        "spin": 5
+                    },
+                    "interface": {
+                        "desaturate": 25,
+                        "lighten": 15,
+                        "spin": 5
+                    }
+                },
+                "documentation": {
+                    "default": {
+                        "desaturate": 35,
+                        "brighten": 10
+                    },
+                    "enumMember": {
+                        "desaturate": 15,
+                        "brighten": 8
+                    }
+                }
+            },
+            "textformatMapping": {
+                "class": {
+                    "bold": true
+                },
+                "declaration": {
+                    "italic": true
+                }
+            },
+            "fallbacks": {
+                "parameter": [
+                    "variable.parameter.function",
+                    "variable.parameter",
+                    "variable.parameter.function-call",
+                    "meta.function.parameter",
+                    "meta.function.parameters"
+                ],
+                "function": [
+                    "entity.name.function",
+                    "meta.function-call",
+                    "entity.name.command"
+                ],
+                "variable": [
+                    "variable.other.readwrite",
+                    "variable.other",
+                    "variable",
+                    "support.variable",
+                    "string.other.link.title.markdown"
+                ],
+                "variable.readonly": [
+                    "entity.name.tag"
+                ],
+                "macro": [
+                    "entity.name.other.preprocessor.macro"
+                ],
+                "macro.defaultLibrary": [
+                    "entity.name.other.preprocessor.macro.predefined"
+                ],
+                "variable.declaration": [
+                    "variable.other.assignment.shell"
+                ],
+                "type": [
+                    "entity.name.type.alias",
+                    "support.type",
+                    "markup.italic.markdown",
+                    "entity.name.type.kotlin"
+                ],
+                "type.readonly": [
+                    "markup.bold.markdown"
+                ],
+                "interface.readonly": [
+                    "comment.line.double-dash.doc variable"
+                ],
+                "type.defaultLibrary.static.async": [
+                    "markup.strikethrough.markdown"
+                ],
+                "type.static": [
+                    "markup.math.inline.markdown",
+                    "entity.name.type.cpp",
+                    "entity.name.type.parameter"
+                ],
+                "type.async": [
+                    "support.type.primitive",
+                    "storage.type.built-in.primitive",
+                    "support.type.builtin"
+                ],
+                "type.defaultLibrary": [
+                    "support.type.built-in",
+                    "comment.line.double-dash.doc support.type"
+                ],
+                "function.static": [
+                    "storage.type.template"
+                ],
+                "typeParameter": [
+                    "entity.name.type.template",
+                    "storage.type.template.argument"
+                ],
+                "namespace": [
+                    "meta.symbol.namespace",
+                    "entity.name.scope-resolution"
+                ],
+                "class.defaultLibrary": [
+                    "support.class"
+                ],
+                "function:lua": [
+                    "support.function.any-method"
+                ],
+                "function.defaultLibrary": [
+                    "support.function.builtin",
+                    "support.function.misc",
+                    "support.function",
+                    "keyword.operator.cast.static_cast",
+                    "entity.name.function.definition.special"
+                ],
+                "property.readonly": [
+                    "markup.list.numbered.markdown"
+                ],
+                "property": [
+                    "variable.other.property",
+                    "support.variable.property",
+                    "variable.other.object.property",
+                    "variable.other.table.property",
+                    "meta.attribute",
+                    "constant.other.option",
+                    "support.type.property-name",
+                    "variable.object.property",
+                    "meta.flow-mapping.yaml",
+                    "entity.other.attribute",
+                    "support.type.property-name.css",
+                    "meta.property-name",
+                    "entity.other.attribute-name",
+                    "entity.name.tag.yaml",
+                    "markup.list.unnumbered.markdown"
+                ],
+                "class": [
+                    "entity.name.type.class",
+                    "entity.name.class",
+                    "entity.other.inherited-class",
+                    "entity.name.function-table",
+                    "entity.other.attribute-name.class"
+                ],
+                "method": [
+                    "meta.directive.vue",
+                    "entity.name.method-function",
+                    "entity.other.attribute-name.pseudo-class",
+                    "entity.name.function.member"
+                ],
+                "selfParameter": [
+                    "variable.language.this",
+                    "variable.language.self",
+                    "variable.language.special.self"
+                ],
+                "variable.defaultLibrary.readonly": [
+                    "const"
+                ]
+            },
+            "alias": {
+                "defaultLibrary": [
+                    "builtin"
+                ],
+                "documentation": [
+                    "typeHint"
+                ],
+                "declaration": [
+                    "definition"
+                ],
+                "function.defaultLibrary": [
+                    "magicFunction"
+                ]
+            },
+            "modifierCombinations": [
+                "readonly.declaration.async",
+                "readonly.async",
+                "readonly.declaration",
+                "private.readonly.declaration",
+                "private.readonly",
+                "private.readonly.async.declaration",
+                "private.declaration",
+                "private.async.declaration",
+                "private.async",
+                "defaultLibrary.readonly",
+                "static.declaration",
+                "static.async",
+                "declaration.async",
+                "defaultLibrary.static",
+                "defaultLibrary.declaration",
+                "defaultLibrary.async",
+                "defaultLibrary.documentation",
+                "function:lua"
+            ]
+        },
+        {
+            "label": "Semantic Rainbow - No Italics",
+            "mainTheme": false,
+            "parent": "semantic-rainbow",
+            "uiTheme": "vs-dark",
+            "colorPath": "./colors/semantic-rainbow-color-theme.json",
+            "path": "./themes/semantic-rainbow-no-italics-color-theme.json",
+            "id": "semantic-rainbow-no-italics",
+            "baseTokenColors": {},
+            "modifications": {},
+            "textformatMapping": {
+                "declaration": {}
+            },
+            "fallbacks": {},
+            "modifierCombinations": []
+        }
+    ],
+    "readmePath": "./README.md",
+    "readmeTemplatePath": "./generator/_Template.md"
+}
